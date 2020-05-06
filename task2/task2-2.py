@@ -1,3 +1,5 @@
+from collections import deque
+
 import numpy as np
 
 
@@ -8,16 +10,13 @@ def main():
     width = maze.shape[1]-1
     goal_x = hight-1
     goal_y = width-1
-    openlist = [[1,1]]
+    openlist = deque([[1,1]])
     closed = []
     dx_dy = [[1,0],[0,1],[-1,0],[0,-1]]
 
 
     while openlist:
-        # print(openlist)
-        # print(closed,"\n")
-        target = openlist.pop()
-        print("target",target,"\n")
+        target = openlist.popleft()
         closed.append(target)
         if target[0] == goal_x and target[1] == goal_y:
             break
