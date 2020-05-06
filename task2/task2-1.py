@@ -14,8 +14,6 @@ def main():
 
 
     while openlist:
-        # print(openlist)
-        # print(closed,"\n")
         target = openlist.pop()
         print("target",target,"\n")
         closed.append(target)
