@@ -48,9 +48,9 @@ def main():
                 maze[nx][ny] = 1
 
     #図と最終的なクローズドリストの表示
-    # plt.show()
-    # print("探索結果")
-    # print(closed)
+    plt.show()
+    print("探索結果")
+    print(closed)
 
 if __name__ == "__main__":
     main()
