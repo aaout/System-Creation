@@ -5,7 +5,7 @@ import numpy as np
 def main():
     #地図の取得
     maze = np.loadtxt('task2.txt', dtype=int)
-
+    print(len(maze))
     #地図の縦と横の長さ
     height = maze.shape[0]-1
     width = maze.shape[1] - 1
@@ -48,9 +48,9 @@ def main():
                 maze[nx][ny] = 1
 
     #図と最終的なクローズドリストの表示
-    plt.show()
-    print("探索結果")
-    print(closed)
+    # plt.show()
+    # print("探索結果")
+    # print(closed)
 
 if __name__ == "__main__":
     main()
