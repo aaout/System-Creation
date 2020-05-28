@@ -9,6 +9,7 @@ class Node:
         self.y = y
         self.wall = True
         self.check = False
+        self.g = 0
         self.h = 30 - x - y
 
 
@@ -56,25 +57,20 @@ def main():
             nx, ny = target.x + dx_dy[i][0], target.y + dx_dy[i][1]
             #範囲内の道で未チェックであるもの
             if maze_node[nx][ny].wall == False and maze_node[nx][ny].check == False and 1 <= nx < (length - 1) and 1 <= ny < (length - 1):
-                # openlist.append(maze_node[nx][ny])
-                #チェックを付ける
+                openlist.append(maze_node[nx][ny])
+                #各ノードのパラメータを更新
+                #チェックを付け、コストをインクリメントする
                 maze_node[nx][ny].check = True
+                maze_node[nx][ny].g = target.g + 1
                 #ソート部分
                 #リストの左側に小さいものがくるようにする
-                if not openlist:
+                if openlist == None:
                     openlist.append(maze_node[nx][ny])
                 else:
                     for i in range(len(openlist)):
-                        # print("openlist:", openlist[i].h)
-                        # print("maze_node:", maze_node[nx][ny].h)
-                        # print("\n")
-                        if openlist[i].h > maze_node[nx][ny].h:
+                        if openlist[i].g > maze_node[nx][ny].g:
                             openlist.insert(i, maze_node[nx][ny])
-                            break
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
-        for i in openlist:
-            print(i.x, i.y, i.h)
-        print("\n")
 
 
     #図と最終的なクローズドリストの表示
