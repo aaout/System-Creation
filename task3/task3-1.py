@@ -9,6 +9,7 @@ class Node:
         self.y = y
         self.wall = True
         self.check = False
+        self.g = 0
 
 
 def main():
@@ -34,14 +35,14 @@ def main():
     plt.xticks(np.arange(length), np.arange(length))
     plt.yticks(np.arange(length), np.arange(length))
     plt.plot(1, 1, "D", color="tab:red", markersize=10)
-    plt.plot(length-2, length-2, "D", color="tab:green", markersize=10)
+    plt.plot(length - 2, length - 2, "D", color="tab:green", markersize=10)
+
 
     #オープンリストが空になるまで
     while openlist:
         #注目しているマス目
-        target = openlist.pop()
+        target = openlist.pop(0)
         closedlist.append(target)
-        # print(target.x)
 
         #ゴールに着いたら終わり
         #注目マスの前後左右を探索
@@ -54,7 +55,18 @@ def main():
             if maze_node[nx][ny].wall == False and maze_node[nx][ny].check == False and 1 <= nx < (length - 1) and 1 <= ny < (length - 1):
                 openlist.append(maze_node[nx][ny])
                 maze_node[nx][ny].check = True
+                maze_node[nx][ny].g = target.g + 1
+                if openlist == None:
+                    openlist.append(maze_node[nx][ny])
+                else:
+                    for i in range(len(openlist)):
+                        if openlist[i].g > maze_node[nx][ny].g:
+                            openlist.insert(i, maze_node[nx][ny])
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
+        for i in openlist:
+            print(i.x, i.y, i.g)
+        print("\n")
+
 
     #図と最終的なクローズドリストの表示
     plt.show()
