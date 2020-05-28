@@ -43,6 +43,9 @@ def main():
 
     #オープンリストが空になるまで
     while openlist:
+        # for i in openlist:
+        #     print(i.x, i.y, i.g)
+        # print("\n")
         #注目しているマス目
         target = openlist.pop(0)
         closedlist.append(target)
@@ -57,20 +60,24 @@ def main():
             nx, ny = target.x + dx_dy[i][0], target.y + dx_dy[i][1]
             #範囲内の道で未チェックであるもの
             if maze_node[nx][ny].wall == False and maze_node[nx][ny].check == False and 1 <= nx < (length - 1) and 1 <= ny < (length - 1):
-                openlist.append(maze_node[nx][ny])
+                #条件を満たすノードはとりあえずリストの右端に代入
                 #各ノードのパラメータを更新
                 #チェックを付け、コストをインクリメントする
+                openlist.append(maze_node[nx][ny])
                 maze_node[nx][ny].check = True
                 maze_node[nx][ny].g = target.g + 1
-                #ソート部分
-                #リストの左側に小さいものがくるようにする
-                if openlist == None:
-                    openlist.append(maze_node[nx][ny])
-                else:
-                    for i in range(len(openlist)):
-                        if openlist[i].g > maze_node[nx][ny].g:
-                            openlist.insert(i, maze_node[nx][ny])
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
+
+
+                #ソート部分
+                #先ほど代入したノードに関してバブルソートを行い、左側に小さいものがくるようにする
+                var = len(openlist) - 1
+                while var > 0:
+                    if openlist[var].g < openlist[var-1].g:
+                        openlist[var], openlist[var - 1] = openlist[var - 1], openlist[var]
+                        var -= 1
+                    else:
+                        break
 
 
     #図と最終的なクローズドリストの表示

@@ -42,9 +42,9 @@ def main():
 
     #オープンリストが空になるまで
     while openlist:
-        for i in openlist:
-            print(i.x, i.y, i.g)
-        print("\n")
+        # for i in openlist:
+        #     print(i.x, i.y, i.g)
+        # print("\n")
         #注目しているマス目
         target = openlist.pop(0)
         closedlist.append(target)

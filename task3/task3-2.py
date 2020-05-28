@@ -42,8 +42,12 @@ def main():
 
     #オープンリストが空になるまで
     while openlist:
+        # for i in openlist:
+        #     print(i.x, i.y, i.h)
+        # print("\n")
+
         #注目しているマス目
-        target = openlist.pop(0)
+        target = openlist.pop()
         closedlist.append(target)
 
         #ゴールに着いたら終わり
@@ -56,25 +60,23 @@ def main():
             nx, ny = target.x + dx_dy[i][0], target.y + dx_dy[i][1]
             #範囲内の道で未チェックであるもの
             if maze_node[nx][ny].wall == False and maze_node[nx][ny].check == False and 1 <= nx < (length - 1) and 1 <= ny < (length - 1):
-                # openlist.append(maze_node[nx][ny])
-                #チェックを付ける
+                #条件を満たすノードはとりあえずリストの右端に代入
+                #各ノードのパラメータを更新
+                #チェックを付け、コストをインクリメントする
+                openlist.append(maze_node[nx][ny])
                 maze_node[nx][ny].check = True
-                #ソート部分
-                #リストの左側に小さいものがくるようにする
-                if not openlist:
-                    openlist.append(maze_node[nx][ny])
-                else:
-                    for i in range(len(openlist)):
-                        # print("openlist:", openlist[i].h)
-                        # print("maze_node:", maze_node[nx][ny].h)
-                        # print("\n")
-                        if openlist[i].h > maze_node[nx][ny].h:
-                            openlist.insert(i, maze_node[nx][ny])
-                            break
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
-        for i in openlist:
-            print(i.x, i.y, i.h)
-        print("\n")
+
+
+                #ソート部分
+                #先ほど代入したノードに関してバブルソートを行い、右側に小さいものがくるようにする
+                var = len(openlist) - 1
+                while var > 0:
+                    if openlist[var].h > openlist[var-1].h:
+                        openlist[var], openlist[var - 1] = openlist[var - 1], openlist[var]
+                        var -= 1
+                    else:
+                        break
 
 
     #図と最終的なクローズドリストの表示
