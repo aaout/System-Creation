@@ -20,9 +20,11 @@ def main():
     #各リストの作成
     openlist = []
     closedlist = []
+    #テキストファイルを元にノードを作成
     maze_node = [[Node(i, j) for j in range(length)] for i in range(length)]
     dx_dy = [[1, 0], [0, 1], [-1, 0], [0, -1]]
 
+    #壁か否か
     for j in range(length):
         for i in range(length):
             if maze[i][j] == 0:
@@ -52,10 +54,15 @@ def main():
             break
         for i in range(4):
             nx, ny = target.x + dx_dy[i][0], target.y + dx_dy[i][1]
+            #範囲内の道で未チェックであるもの
             if maze_node[nx][ny].wall == False and maze_node[nx][ny].check == False and 1 <= nx < (length - 1) and 1 <= ny < (length - 1):
                 openlist.append(maze_node[nx][ny])
+                #各ノードのパラメータを更新
+                #チェックを付け、コストをインクリメントする
                 maze_node[nx][ny].check = True
                 maze_node[nx][ny].g = target.g + 1
+                #ソート部分
+                #リストの左側に小さいものがくるようにする
                 if openlist == None:
                     openlist.append(maze_node[nx][ny])
                 else:
@@ -63,9 +70,6 @@ def main():
                         if openlist[i].g > maze_node[nx][ny].g:
                             openlist.insert(i, maze_node[nx][ny])
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
-        for i in openlist:
-            print(i.x, i.y, i.g)
-        print("\n")
 
 
     #図と最終的なクローズドリストの表示
