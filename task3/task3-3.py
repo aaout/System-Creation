@@ -11,6 +11,10 @@ class Node:
         self.check = False
         self.g = 0
         self.h = 30 - x - y
+        self.f = 30 - x - y
+
+    def calc_f(self, g, h):
+        self.f = g + h
 
 
 def main():
@@ -43,9 +47,9 @@ def main():
 
     #オープンリストが空になるまで
     while openlist:
-        # for i in openlist:
-        #     print(i.x, i.y, i.g)
-        # print("\n")
+        for i in openlist:
+            print(i.x, i.y, i.g, i.h, i.f)
+        print("\n")
         #注目しているマス目
         target = openlist.pop(0)
         closedlist.append(target)
@@ -66,6 +70,7 @@ def main():
                 openlist.append(maze_node[nx][ny])
                 maze_node[nx][ny].check = True
                 maze_node[nx][ny].g = target.g + 1
+                maze_node[nx][ny].calc_f((maze_node[nx][ny].g), (maze_node[nx][ny].h))
                 plt.quiver(target.y, target.x, ny - (target.y), nx - (target.x), angles='xy', scale_units='xy', scale=1)
 
 
@@ -73,7 +78,7 @@ def main():
                 #先ほど代入したノードに関してバブルソートを行い、左側に小さいものがくるようにする
                 var = len(openlist) - 1
                 while var > 0:
-                    if openlist[var].g < openlist[var-1].g:
+                    if openlist[var].f < openlist[var-1].f:
                         openlist[var], openlist[var - 1] = openlist[var - 1], openlist[var]
                         var -= 1
                     else:
