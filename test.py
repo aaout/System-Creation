@@ -1,18 +1,11 @@
-def solv_quadratic_equation(a, b, c):
-    """ 2次方程式を解く  """
-    D = (b**2 - 4*a*c) ** (1/2)
-    x_1 = (-b + D) / (2 * a)
-    x_2 = (-b - D) / (2 * a)
+import numpy as np
+import sympy as sym
 
-    return x_1, x_2
+a, b = sym.symbols("a, b")
+eq = 1/2 *((b)**2 + (a - 1/2)**2 + (a  - 3/2)**2)
+eq1 = sym.diff(eq, a)
+eq2 = sym.diff(eq, b)
 
-if __name__ == '__main__':
-    a =input('input a: ')
-    b =input('input b: ')
-    c =input('input c: ')
-
-    print(solv_quadratic_equation.__doc__)
-    x1, x2 = solv_quadratic_equation(float(a) , float(b) , float(c))
-
-    print('x1:{}'.format(x1))
-    print('x2:{}'.format(x2))
+ans = sym.solve([eq1, eq2])
+print("a:",float(ans[a]))
+print("b:",float(ans[b]))
