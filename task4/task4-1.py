@@ -19,7 +19,7 @@ class Node:
 
 def main():
     #地図の取得
-    maze = np.loadtxt('task3.txt', dtype=int)
+    maze = np.loadtxt('task4.txt', dtype=int)
     length = len(maze)
 
     #テキストファイルを元にノードを作成
@@ -48,7 +48,7 @@ def main():
     count = 0
 
     #ゴールにたどり着くまで
-    while target != maze_node[13][13]:
+    while target != maze_node[length-2][length-2]:
         count += 1
         #0.8の確率で思い通りの行動
         #思い通りの行動ができないときは移動しないので処理は記述しない

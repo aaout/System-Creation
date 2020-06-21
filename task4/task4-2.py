@@ -19,7 +19,7 @@ class Node:
 
 def main():
     #地図の取得
-    maze = np.loadtxt('test.txt', dtype=int)
+    maze = np.loadtxt('task4.txt', dtype=int)
     length = len(maze)
 
     #テキストファイルを元にノードを作成
