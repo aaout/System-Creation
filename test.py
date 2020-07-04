@@ -1,5 +1,19 @@
 import sys
 
+import numpy as np
+
+
+def cos_sim(v1, v2):
+    print(np.dot(v1, v2))
+    print((np.linalg.norm(v1) * np.linalg.norm(v2)))
+    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+
+X = np.array([1, 4, 2])
+Y = np.array([2, 1, 4])
+
+print(cos_sim(X, Y))
+
+
 # class Node:
 #     def __init__(self, x, y):
 #         self.x = x
@@ -71,22 +85,3 @@ import sys
 
 # if __name__ == '__main__':
 #     main()
-
-def make_divisors(n):
-    divisors = []
-    for i in range(1, int(n**0.5)+1):
-        if n % i == 0:
-            divisors.append(i)
-            if i != n // i:
-                divisors.append(n//i)
-
-    divisors.sort()
-    return divisors
-
-def main():
-    x = make_divisors(60)
-    print(x)
-
-
-if __name__ == '__main__':
-    main()
