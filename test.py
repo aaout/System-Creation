@@ -1,17 +1,27 @@
-import sys
+from pulp.constants import LpMaximize
+from pulp.pulp import LpProblem, LpVariable
 
-import numpy as np
+# 今回の問題では総和を最大化するので LpMaximize を指定する
+problem = LpProblem('Restaurant', LpMaximize)
 
+# 使用する変数
+x = LpVariable('X')
+y = LpVariable('Y')
 
-def cos_sim(v1, v2):
-    print(np.dot(v1, v2))
-    print((np.linalg.norm(v1) * np.linalg.norm(v2)))
-    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
+# 目的関数
+problem += 30 * x + 25 * y
 
-X = np.array([1, 4, 2])
-Y = np.array([2, 1, 4])
+# 制約条件
+problem += 0.5 * x + 0.25 * y <= 10  # ひき肉の総量は 3800g
+problem += 0.5 * x + 0.75 * y <= 15  # 玉ねぎの総量は 2100g
 
-print(cos_sim(X, Y))
+# 解く
+problem.solve()
+
+# 結果表示
+print('x: {x}'.format(x=x.value()))
+print('y: {y}'.format(y=y.value()))
+print(x.value() * y.value())
 
 
 # class Node:
